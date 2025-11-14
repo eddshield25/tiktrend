@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AffiliateShop - TikTok & Amazon Finds</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #eab308;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Products Grid */
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--dark);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-source {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .product-price .original {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section a {
+            color: #cbd5e1;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #334155;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background-color: var(--success);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .toast.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background-color: var(--danger);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-shopping-bag"></i>
+                    AffiliateShop
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#" id="admin-link">Admin</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Discover Amazing Affiliate Products</h1>
+            <p>Curated products from TikTok, Amazon, and more. Best deals delivered to you.</p>
+            <a href="#products" class="btn">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="container">
+        <h2 class="section-title">Featured Products</h2>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All Products</button>
+            <button class="filter-btn" data-filter="tiktok">TikTok Finds</button>
+            <button class="filter-btn" data-filter="amazon">Amazon</button>
+            <button class="filter-btn" data-filter="other">Other</button>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+            <!-- Products will be loaded here dynamically -->
+        </div>
+    </section>
+
+    <!-- Admin Panel -->
+    <section class="admin-panel container" id="admin-panel">
+        <h2 class="section-title">Admin Panel</h2>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="add-product">Add Product</div>
+            <div class="tab" data-tab="bulk-upload">Bulk Upload</div>
+            <div class="tab" data-tab="manage-products">Manage Products</div>
+        </div>
+
+        <div class="tab-content active" id="add-product-tab">
+            <form id="add-product-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-title">Product Title</label>
+                        <input type="text" id="product-title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price">Price ($)</label>
+                        <input type="number" id="product-price" class="form-control" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-description">Description</label>
+                    <textarea id="product-description" class="form-control" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-affiliate-link">Affiliate Link</label>
+                        <input type="url" id="product-affiliate-link" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-source">Source</label>
+                        <select id="product-source" class="form-control" required>
+                            <option value="tiktok">TikTok</option>
+                            <option value="amazon">Amazon</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-category">Category</label>
+                        <input type="text" id="product-category" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-image">Image URL</label>
+                        <input type="url" id="product-image" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product-tags">Tags (comma separated)</label>
+                    <input type="text" id="product-tags" class="form-control" placeholder="tag1, tag2, tag3">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Product</button>
+            </form>
+        </div>
+
+        <div class="tab-content" id="bulk-upload-tab">
+            <div class="form-group">
+                <label>Google Sheets Template</label>
+                <p>Use this <a href="#" id="template-link">Google Sheets template</a> to bulk upload products. Make sure to share the sheet publicly and paste the URL below.</p>
+            </div>
+
+            <div class="form-group">
+                <label for="sheets-url">Google Sheets URL</label>
+                <input type="url" id="sheets-url" class="form-control" placeholder="https://docs.google.com/spreadsheets/d/...">
+            </div>
+
+            <button class="btn btn-primary" id="import-sheets">Import from Sheets</button>
+        </div>
+
+        <div class="tab-content" id="manage-products-tab">
+            <div id="admin-products-list">
+                <!-- Admin products list will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AffiliateShop</h3>
+                    <p>Your one-stop destination for the best affiliate products from TikTok, Amazon, and other platforms.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#">Home</a>
+                    <a href="#products">Products</a>
+                    <a href="#admin-panel">Admin</a>
+                    <a href="#about">About Us</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@affiliateshop.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Commerce St, City, State 12345</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AffiliateShop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div id="modal-content">
+                <!-- Product details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Sample product data (in a real app, this would come from Google Sheets)
+        let products = JSON.parse(localStorage.getItem('affiliateProducts')) || [
+            {
+                id: 1,
+                title: "Viral TikTok Hair Styler",
+                description: "The hair tool that went viral on TikTok for creating perfect curls in minutes.",
+                price: 29.99,
+                originalPrice: 39.99,
+                affiliateLink: "https://example.com/product1",
+                source: "tiktok",
+                category: "Beauty",
+                image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                tags: ["hair", "styler", "beauty"],
+                featured: true,
+                rating: 4.5,
+                reviewCount: 1247
+            },
+            {
+                id: 2,
+                title: "Amazon's Best-Selling Smart Watch",
+                description: "Feature-packed smartwatch with health monitoring and long battery life.",
+                price: 79.99,
+                originalPrice: 99.99,
+                affiliateLink: "https://example.com/product2",
+                source: "amazon",
+                category: "Electronics",
+                image: "https://images.unsplash.com/photo-1544117519-31a4b719223d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                tags: ["smartwatch", "fitness", "tech"],
+                featured: true,
+                rating: 4.3,
+                reviewCount: 3821
+            },
+            {
+                id: 3,
+                title: "Portable Blender for Smoothies",
+                description: "Make healthy smoothies on the go with this powerful portable blender.",
+                price: 24.99,
+                originalPrice: 34.99,
+                affiliateLink: "https://example.com/product3",
+                source: "tiktok",
+                category: "Kitchen",
+                image: "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                tags: ["blender", "kitchen", "health"],
+                featured: false,
+                rating: 4.7,
+                reviewCount: 892
+            },
+            {
+                id: 4,
+                title: "Ergonomic Office Chair",
+                description: "Comfortable office chair with lumbar support for long work hours.",
+                price: 149.99,
+                originalPrice: 199.99,
+                affiliateLink: "https://example.com/product4",
+                source: "amazon",
+                category: "Furniture",
+                image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                tags: ["office", "chair", "ergonomic"],
+                featured: true,
+                rating: 4.4,
+                reviewCount: 1563
+            }
+        ];
+
+        // DOM Elements
+        const productsGrid = document.getElementById('products-grid');
+        const adminPanel = document.getElementById('admin-panel');
+        const adminLink = document.getElementById('admin-link');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const addProductForm = document.getElementById('add-product-form');
+        const importSheetsBtn = document.getElementById('import-sheets');
+        const adminProductsList = document.getElementById('admin-products-list');
+        const productModal = document.getElementById('product-modal');
+        const closeModal = document.getElementById('close-modal');
+        const modalContent = document.getElementById('modal-content');
+        const toast = document.getElementById('toast');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        // Initialize the app
+        function init() {
+            displayProducts(products);
+            setupEventListeners();
+            updateAdminProductsList();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Admin panel toggle
+            adminLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                adminPanel.classList.toggle('active');
+                if (adminPanel.classList.contains('active')) {
+                    adminPanel.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            // Filter products
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.getAttribute('data-filter');
+                    
+                    // Update active filter button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Filter products
+                    if (filter === 'all') {
+                        displayProducts(products);
+                    } else {
+                        const filteredProducts = products.filter(product => product.source === filter);
+                        displayProducts(filteredProducts);
+                    }
+                });
+            });
+
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show corresponding tab content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === `${tabId}-tab`) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            // Add product form
+            addProductForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                addProduct();
+            });
+
+            // Import from Google Sheets
+            importSheetsBtn.addEventListener('click', importFromSheets);
+
+            // Close modal
+            closeModal.addEventListener('click', () => {
+                productModal.classList.remove('active');
+            });
+
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+
+        // Display products in the grid
+        function displayProducts(productsToDisplay) {
+            productsGrid.innerHTML = '';
+            
+            if (productsToDisplay.length === 0) {
+                productsGrid.innerHTML = '<p class="no-products">No products found. Try a different filter.</p>';
+                return;
+            }
+            
+            productsToDisplay.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.title}" class="product-image">
+                    <div class="product-info">
+                        <span class="product-source">${product.source}</span>
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">
+                            $${product.price}
+                            ${product.originalPrice ? `<span class="original">$${product.originalPrice}</span>` : ''}
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn" onclick="viewProduct(${product.id})">View Details</button>
+                            <a href="${product.affiliateLink}" target="_blank" class="btn btn-primary">Buy Now</a>
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        // View product details in modal
+        function viewProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            modalContent.innerHTML = `
+                <img src="${product.image}" alt="${product.title}" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+                <span class="product-source">${product.source}</span>
+                <h2 style="margin: 0.5rem 0;">${product.title}</h2>
+                <p>${product.description}</p>
+                <div class="product-price" style="font-size: 1.5rem; margin: 1rem 0;">
+                    $${product.price}
+                    ${product.originalPrice ? `<span class="original">$${product.originalPrice}</span>` : ''}
+                </div>
+                <div style="display: flex; gap: 1rem; margin: 1.5rem 0;">
+                    <div style="display: flex; align-items: center;">
+                        <i class="fas fa-star" style="color: #f59e0b;"></i>
+                        <span style="margin-left: 0.5rem;">${product.rating} (${product.reviewCount} reviews)</span>
+                    </div>
+                    <span style="background: #e2e8f0; padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.8rem;">
+                        ${product.category}
+                    </span>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="${product.affiliateLink}" target="_blank" class="btn btn-primary" style="flex: 1; text-align: center;">
+                        Buy Now
+                    </a>
+                    <button class="btn" onclick="addToFavorites(${product.id})" style="flex: 1;">
+                        <i class="far fa-heart"></i> Add to Favorites
+                    </button>
+                </div>
+            `;
+            
+            productModal.classList.add('active');
+        }
+
+        // Add product to favorites (placeholder function)
+        function addToFavorites(productId) {
+            showToast('Product added to favorites!', 'success');
+        }
+
+        // Add new product
+        function addProduct() {
+            const title = document.getElementById('product-title').value;
+            const price = parseFloat(document.getElementById('product-price').value);
+            const description = document.getElementById('product-description').value;
+            const affiliateLink = document.getElementById('product-affiliate-link').value;
+            const source = document.getElementById('product-source').value;
+            const category = document.getElementById('product-category').value;
+            const image = document.getElementById('product-image').value;
+            const tags = document.getElementById('product-tags').value.split(',').map(tag => tag.trim());
+            
+            const newProduct = {
+                id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
+                title,
+                description,
+                price,
+                originalPrice: price * 1.2, // Simple calculation for demo
+                affiliateLink,
+                source,
+                category,
+                image,
+                tags,
+                featured: false,
+                rating: (Math.random() * 1 + 4).toFixed(1), // Random rating for demo
+                reviewCount: Math.floor(Math.random() * 1000) + 100 // Random review count
+            };
+            
+            products.push(newProduct);
+            saveProducts();
+            displayProducts(products);
+            updateAdminProductsList();
+            addProductForm.reset();
+            showToast('Product added successfully!', 'success');
+        }
+
+        // Update admin products list
+        function updateAdminProductsList() {
+            adminProductsList.innerHTML = '';
+            
+            if (products.length === 0) {
+                adminProductsList.innerHTML = '<p>No products added yet.</p>';
+                return;
+            }
+            
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.style.cssText = `
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 1rem;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 8px;
+                    margin-bottom: 1rem;
+                `;
+                
+                productItem.innerHTML = `
+                    <div>
+                        <h4 style="margin: 0 0 0.5rem;">${product.title}</h4>
+                        <div style="display: flex; gap: 1rem; font-size: 0.9rem; color: #64748b;">
+                            <span>Source: ${product.source}</span>
+                            <span>Price: $${product.price}</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn" onclick="editProduct(${product.id})" style="padding: 0.5rem;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn" onclick="deleteProduct(${product.id})" style="padding: 0.5rem; background: #ef4444; color: white;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                adminProductsList.appendChild(productItem);
+            });
+        }
+
+        // Edit product (placeholder function)
+        function editProduct(productId) {
+            showToast('Edit feature coming soon!', 'error');
+        }
+
+        // Delete product
+        function deleteProduct(productId) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                products = products.filter(p => p.id !== productId);
+                saveProducts();
+                displayProducts(products);
+                updateAdminProductsList();
+                showToast('Product deleted successfully!', 'success');
+            }
+        }
+
+        // Import products from Google Sheets
+        function importFromSheets() {
+            const sheetsUrl = document.getElementById('sheets-url').value;
+            
+            if (!sheetsUrl) {
+                showToast('Please enter a Google Sheets URL', 'error');
+                return;
+            }
+            
+            // In a real implementation, you would fetch data from the Google Sheets API
+            // For this demo, we'll simulate importing products
+            showToast('Importing products from Google Sheets...', 'success');
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Add some sample imported products
+                const importedProducts = [
+                    {
+                        id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
+                        title: "Imported Product 1",
+                        description: "This product was imported from Google Sheets",
+                        price: 19.99,
+                        originalPrice: 24.99,
+                        affiliateLink: "https://example.com/imported1",
+                        source: "tiktok",
+                        category: "Imported",
+                        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                        tags: ["imported", "demo"],
+                        featured: false,
+                        rating: 4.2,
+                        reviewCount: 150
+                    },
+                    {
+                        id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 2 : 2,
+                        title: "Imported Product 2",
+                        description: "Another product imported from Google Sheets",
+                        price: 34.99,
+                        originalPrice: 39.99,
+                        affiliateLink: "https://example.com/imported2",
+                        source: "amazon",
+                        category: "Imported",
+                        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                        tags: ["imported", "demo"],
+                        featured: false,
+                        rating: 4.0,
+                        reviewCount: 89
+                    }
+                ];
+                
+                products.push(...importedProducts);
+                saveProducts();
+                displayProducts(products);
+                updateAdminProductsList();
+                showToast(`Successfully imported ${importedProducts.length} products!`, 'success');
+            }, 1500);
+        }
+
+        // Save products to localStorage
+        function saveProducts() {
+            localStorage.setItem('affiliateProducts', JSON.stringify(products));
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.className = 'toast';
+            
+            if (type === 'error') {
+                toast.classList.add('error');
+            }
+            
+            toast.classList.add('active');
+            
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
